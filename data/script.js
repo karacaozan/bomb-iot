@@ -1,6 +1,6 @@
 var v = "Hello";
 
-alert(v);
+console.log(v);
 
 function checkNetConnection(){
  var xhr = new XMLHttpRequest();
