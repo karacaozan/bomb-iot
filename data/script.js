@@ -1,5 +1,7 @@
 var v = "Hello";
 
+alert(v);
+
 function checkNetConnection(){
  var xhr = new XMLHttpRequest();
  var file = "http://yoursite.com/somefile.png";
