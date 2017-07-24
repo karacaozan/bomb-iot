@@ -1,0 +1,162 @@
+﻿<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOMB</title>
+<link rel="stylesheet" type="text/css" href="style_dm.css" />
+<script type="text/javascript" src="script_dm.js"></script>
+<script type="text/javascript" src="script_add.js"></script>
+    <script type="text/javascript" src="services.js"></script>
+</head>
+<body>
+
+
+    <div class="container">
+    <h2 class="container-header">Accessories</h2>
+    <div class="inner-container">
+        <div id="commandListDiv"></div>
+    </div>
+</div>
+
+        <div class="container">
+    <h2 class="container-header">Get Recent Codes</h2>
+    <div class="inner-container">
+        
+                            <a href="javascript:void(0);" style="text-decoration: none;" onclick="RefreshCodes_onClick();">Refresh </a>
+
+                    <br />
+                    <div id="recentCodesList" onclick="cbclick(event)">
+                        Nothing to show...
+                    </div>
+        <br />
+                Test Selected Code:<br />
+        <a href="javascript:void(0);" style="text-decoration: none; color: #7D7C7A" onclick="TestCode_onClick();">Send Command </a>
+                    
+
+    </div>
+</div>
+
+
+            <div class="container">
+    <h2 class="container-header">Add New</h2>
+    <div class="inner-container">
+
+        <select class="networkList" id="accessoryType" onchange="accessoryType_onChange();">
+            <option value="RF433Switch">RF Switch</option>
+            <option value="TemperatureSensor">Temp Sensor</option>
+            <option value="HTTPWebRequest">HTTP Web Request</option>
+        </select>
+
+        <br />
+        <br />
+
+
+        <input id="commandName" placeholder="Accessory Name" /><br />
+
+        <div class="adddiv" id="RF433SwitchDiv">
+
+            <select class="networkList" id="commandType">
+                <option value="light">Light</option>
+                <option value="outlet">Power Outlet</option>
+            </select><br />
+            <br />
+            <input id="commandOnValue" placeholder="On value" onfocus="addCodeValue_onFocus(this);" /><br />
+            <input id="commandOffValue" placeholder="Off value" onfocus="addCodeValue_onFocus(this);" /><br />
+        </div>
+        <div class="adddiv" id="HTTPWebRequestDiv" style="display: none;">
+            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
+             <input id="HTTPWebRequestCallback" placeholder="Callback URL" /><br />
+        </div>
+        <div class="adddiv" id="TemperatureSensorDiv" style="display: none;">
+            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
+        </div>
+
+        <input type="button" value="Add" onclick="AddAccessory_onClick();" /><br />
+    </div>
+</div>
+
+    <div class="container">
+    <h2 class="container-header">Remote Accessories</h2>
+    <div class="inner-container">
+
+        <div id="remoteAccessories"></div>
+
+    </div>
+</div>
+
+            <div class="container">
+        <h2 class="container-header"></h2>
+        <div class="inner-container">
+           <p><input style="-webkit-appearance: none;" type="submit" value="Cancel" onclick="javascript: top.location = '/'; return false;" /></p>
+           <p><input style="-webkit-appearance: none;" type="submit" value="Settings" onclick="javascript: top.location = '/settings.html'; return false;" /></p>
+        </div>
+    </div>
+
+        <script>
+
+function Scan() {
+
+_found = 0;
+_error = 0;
+_sent = 0;
+
+for (i = 2; i < 255; i++) {
+
+//if ("192.168.1." + i.toString() == window.location.host)
+//continue;
+
+var url = "http://192.168.1." + i.toString() + "/accessories.json?" + Math.floor((Math.random() * 10000) + 1);
+getHHTP(url);
+_sent++;
+//}
+}
+}
+
+
+function getHHTP(url) {
+    var xmlhttp = HTTPRequestHelper(url, successHandler, failHandler, 3000);
+    function successHandler(response) {
+        try {
+            var arr = JSON.parse(response);
+            for (j = 0; j < arr.length; j++) {
+                arr[j].ip = xmlhttp.getResponseHeader("origin");
+                _devices.push(arr[j]);
+            }
+            _found++;
+            isCompleted();
+        }
+        catch (err) {
+            _error = _error + 1;
+        }
+    };
+    function failHandler(response) {
+        _error = _error + 1;
+        isCompleted();
+    };
+}
+
+function isCompleted() {
+    if (_found + _error == _sent) {
+        remoteAccessories.innerHTML = "";
+        function isLocal(device) {
+            return device.isLocal == true;
+        }
+        localdevices = _devices.filter(isLocal);
+        _devices = localdevices;
+
+        var remoteDeviceTable = CreateTable(localdevices.length, 4, "accessoriesTable");
+        for (i = 0; i < localdevices.length; i++) {
+
+            remoteDeviceTable.ChangeCellContent(i, 0, localdevices[i].ip);
+            remoteDeviceTable.ChangeCellContent(i, 1, localdevices[i].name);
+            remoteDeviceTable.ChangeCellContent(i, 2, '<div class="' + localdevices[i].icon + '">&nbsp;</div>');
+            remoteDeviceTable.ChangeCellContent(i, 3, '<div class="divTableCell" arrayindex="' + i + '" onclick="AddRemote(this);">Add</div>');
+
+            //remoteAccessories.innerHTML += '<input type="checkbox" id="cb' + _devices[i].name + '" value="' + _devices[i].name + '" />' + _devices[i].name + ' (' + _devices[i].name + ')' + '<br />';
+        }
+        remoteAccessories.innerHTML = remoteDeviceTable.view.innerHTML;
+    }
+}
+        </script>
+</body>
+</html>
