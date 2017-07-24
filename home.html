@@ -80,25 +80,25 @@ _sent++;
 
 
 function getHHTP(url) {
-    var xmlhttp = HTTPRequestHelper(url, successHandler, failHandler, 3000);
-    function successHandler(response) {
-        try {
-            var arr = JSON.parse(response);
-            for (j = 0; j < arr.length; j++) {
-                arr[j].ip = xmlhttp.getResponseHeader("origin");
-                _devices.push(arr[j]);
-            }
-            _found++;
-            isCompleted();
-        }
-        catch (err) {
-            _error = _error + 1;
-        }
-    };
-    function failHandler(response) {
-        _error = _error + 1;
-        isCompleted();
-    };
+var xmlhttp = HTTPRequestHelper(url, successHandler, failHandler, 3000);
+function successHandler(response) {
+try {
+var arr = JSON.parse(response);
+for (j = 0; j < arr.length; j++) {
+arr[j].ip = xmlhttp.getResponseHeader("origin");
+_devices.push(arr[j]);
+}
+_found++;
+isCompleted();
+}
+catch (err) {
+_error = _error + 1;
+}
+};
+function failHandler(response) {
+_error = _error + 1;
+isCompleted();
+};
 }
 
 function isCompleted() {
@@ -124,7 +124,25 @@ function isCompleted() {
     }
 }
 
-Scan();
+function PageLoad(event) {
+    //LoadAccessories();
+    Scan();
+}
+
+if (window.attachEvent) {
+    window.attachEvent('onload', yourFunctionName);
+} else {
+    if (window.onload) {
+        var curronload = window.onload;
+        var newonload = function (evt) {
+            curronload(evt);
+            PageLoad(evt);
+        };
+        window.onload = newonload;
+    } else {
+        window.onload = PageLoad;
+    }
+}
         </script>
 </body>
 </html>
