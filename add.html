@@ -1,0 +1,140 @@
+﻿<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOMB</title>
+<link rel="stylesheet" type="text/css" href="style_dm.css" />
+<script type="text/javascript" src="script_dm.js"></script>
+<script type="text/javascript" src="script_add.js"></script>
+    <script type="text/javascript" src="services.js"></script>
+</head>
+<body>
+
+
+    <div class="container">
+    <h2 class="container-header">Accessories</h2>
+    <div class="inner-container">
+        <div id="commandListDiv"></div>
+    </div>
+</div>
+
+        <div class="container">
+    <h2 class="container-header">Get Recent Codes</h2>
+    <div class="inner-container">
+        
+                            <a href="javascript:void(0);" style="text-decoration: none;" onclick="RefreshCodes_onClick();">Refresh </a>
+
+                    <br />
+                    <div id="recentCodesList" onclick="cbclick(event)">
+                        Nothing to show...
+                    </div>
+        <br />
+                Test Selected Code:<br />
+        <a href="javascript:void(0);" style="text-decoration: none; color: #7D7C7A" onclick="TestCode_onClick();">Send Command </a>
+                    
+
+    </div>
+</div>
+
+
+            <div class="container">
+    <h2 class="container-header">Add New</h2>
+    <div class="inner-container">
+
+        <select class="networkList" id="accessoryType" onchange="accessoryType_onChange();">
+            <option value="RF433Switch">RF Switch</option>
+            <option value="TemperatureSensor">Temp Sensor</option>
+            <option value="HTTPWebRequest">HTTP Web Request</option>
+        </select>
+
+        <br />
+        <br />
+
+
+        <input id="commandName" placeholder="Accessory Name" /><br />
+
+        <div class="adddiv" id="RF433SwitchDiv">
+
+            <select class="networkList" id="commandType">
+                <option value="light">Light</option>
+                <option value="outlet">Power Outlet</option>
+            </select><br />
+            <br />
+            <input id="commandOnValue" placeholder="On value" onfocus="addCodeValue_onFocus(this);" /><br />
+            <input id="commandOffValue" placeholder="Off value" onfocus="addCodeValue_onFocus(this);" /><br />
+        </div>
+        <div class="adddiv" id="HTTPWebRequestDiv" style="display: none;">
+            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
+             <input id="HTTPWebRequestCallback" placeholder="Callback URL" /><br />
+        </div>
+        <div class="adddiv" id="TemperatureSensorDiv" style="display: none;">
+            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
+        </div>
+
+        <input type="button" value="Add" onclick="AddAccessory_onClick();" /><br />
+    </div>
+</div>
+
+    <div class="container">
+    <h2 class="container-header">Remote Accessories</h2>
+    <div class="inner-container">
+
+        <div id="remoteAccessories"></div>
+
+    </div>
+</div>
+
+            <div class="container">
+        <h2 class="container-header"></h2>
+        <div class="inner-container">
+           <p><input style="-webkit-appearance: none;" type="submit" value="Cancel" onclick="javascript: top.location = '/'; return false;" /></p>
+           <p><input style="-webkit-appearance: none;" type="submit" value="Settings" onclick="javascript: top.location = '/settings.html'; return false;" /></p>
+        </div>
+    </div>
+
+        <script>
+
+            
+
+            function accessoryType_onChange()
+            {
+                
+                var divs = document.getElementsByClassName("addDiv");
+                if (divs)
+                    for (i = 0; i < divs.length; i++)
+                        if (divs[i])
+                            divs[i].setAttribute("style", "display:none;");
+
+                document.getElementById(document.getElementById("accessoryType").value + "Div").setAttribute("style" , "display:block");
+            }
+
+            function AddAccessory_onClick() {
+
+                var type = document.getElementById("accessoryType").value;
+                var accessory;
+                if (type == "RF433Switch") {
+
+                    accessory = RF433Switch("", commandName.value, commandType.value, true, "Off", "");
+                    accessory.SetActionData("On", commandOnValue.value);
+                    accessory.SetActionData("Off", commandOffValue.value);
+                }
+                else if (type == "TemperatureSensor") {
+                    accessory = TemperatureSensor("", commandName.value, "sensor", true, "Get", "");
+                }
+
+                else if (type == "HTTPWebRequest") {
+                    accessory = HTTPWebRequest("", commandName.value, "sensor", true, "Get", "");
+                    accessory.SetActionData("Callback", HTTPWebRequestCallback.value);
+                }
+
+
+
+                _accessories.push(accessory);
+                RefreshAccessories();
+                var myJsonString = JSON.stringify(_accessories);
+                saveJsonToFile("accessories.json", myJsonString);
+                return false;
+            }
+        </script>
+</body>
+</html>
