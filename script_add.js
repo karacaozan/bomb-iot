@@ -60,15 +60,24 @@ function AddRemote(sender) {
     }
 
     var accessory;
-    if (_devices[index].device && _devices[index].device == "RF433") {
 
-        accessory = RF433Switch(remoteAccessory.id, remoteAccessory.name, remoteAccessory.icon, false, "Off", remoteAccessory.ip);
-        accessory.SetCallbackData("On", remoteAccessory.callbacks[0].data);
-        accessory.SetCallbackData("Off", remoteAccessory.callbacks[1].data);
+
+    if (_devices[index].type && _devices[index].type == "RF433Switch") {
+
+        accessory = RF433Switch(remoteAccessory.id, remoteAccessory.name, "RF433Switch", false, "Off", remoteAccessory.ip);
+        accessory.SetActionData("On", commandOnValue.value);
+        accessory.SetActionData("Off", commandOffValue.value);
     }
-    else if (_devices[index].type == "TemperatureSensor") {
+    else if (_devices[index].type && _devices[index].type == "TemperatureSensor") {
         accessory = TemperatureSensor(remoteAccessory.id, remoteAccessory.name, remoteAccessory.icon, false, "Off", remoteAccessory.ip);
     }
+
+    else if (_devices[index].type && _devices[index].type == "HTTPWebRequest") {
+        accessory = HTTPWebRequest(remoteAccessory.id, remoteAccessory.name, "sensor", false, "Get", remoteAccessory.ip);
+        accessory.SetActionData("Callback", HTTPWebRequestCallback.value);
+    }
+
+
     accessory.isLocal = false;
     _accessories.push(accessory);
     RefreshAccessories();
