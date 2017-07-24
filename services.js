@@ -336,8 +336,12 @@ var RelayTimerSwitch = function (id, name, icon, isLocal, defaultState, ip) {
 
 function LoadAccessories() {
     if (top.location.toString().lastIndexOf("ozankaraca.com") > 0) {
-        _accessories =  localStorage.getItem("/accessories.json");
-        RefreshAccessories();
+        var list = localStorage.getItem("/accessories.json");
+        if (list) {
+            var arr = JSON.parse(response);
+            _accessories = arr;
+            RefreshAccessories();
+        }        
         return;
     }
 
