@@ -1,0 +1,138 @@
+body {
+  background: #456;
+  font-family: 'Open Sans', sans-serif;
+}
+.container {
+	width: 98%;
+	max-width: 375px;
+	margin: 16px auto;
+	font-size: 15px;
+	border-radius: 4px;
+	border-width: 1px;
+	border-style: solid;
+    max-width:380px;
+}
+.container-header,
+.container p {
+	margin-top: 0;
+	margin-bottom: 0;
+    max-width:380px;
+}
+.container-header {
+	background: #9e9e9e;
+	padding: 10px;
+	font-size: 1.4em;
+	font-weight: normal;
+	text-align: center;
+	text-transform: uppercase;
+	color: #fff;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+.inner-container {
+  background: #ebebeb;
+  padding: 12px;
+    border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+.container p {
+  padding: 8px;
+}
+.container input {
+	box-sizing: border-box;
+	border-width: 1px;
+	border-style: solid;
+	padding: 16px;
+	outline: 0;
+	font-family: inherit;  
+	display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.container input[type="email"],
+.container input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+}
+.container input[type="email"]:focus,
+.container input[type="password"]:focus {
+  border-color: #888;
+}
+.container input[type="submit"] {
+  background: #28d;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.container input[type="checkbox"] {
+    display: inline;
+    width: 35px;
+    height: 20px;
+}
+.networkList {
+    width: 100%;
+    height: 34px;
+    padding: 6px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    color: #555;
+    border-radius: 4px;
+}
+.timerDropdown {
+    height: 34px;
+    padding: 6px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    color: #555;
+    border-radius: 4px;
+}
+.container input[type="submit"]:hover {
+  background: #17c;
+}
+.container input[type="submit"]:focus {
+    border-color: #05a;
+}
+progress:before {
+  content: attr(data-label);
+  font-size: 13px;
+  vertical-align: middle;
+}
+progress
+{
+  text-align:center;
+  height: 25px;
+  width: 100%;
+  vertical-align: middle;
+  border: none;
+}
+.accessoriesTable {
+    width: 95%;
+    font-family: 'Arial';
+    margin-left: 10px;
+    font-size: 12px;
+}
+.light {
+background-image: url(spritesheet.png);
+background-position: -33px -5px;
+background-repeat: no-repeat;
+
+min-height: 35px;
+width: 30px;
+}
+.outlet {
+background-position: -63px -44px;
+background-image: url(spritesheet.png);
+background-repeat: no-repeat;
+min-height: 35px;
+width: 30px;
+}
