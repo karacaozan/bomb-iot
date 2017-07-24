@@ -32,10 +32,10 @@
         <script>
 		
 		function HTTPRequestHelper(url, successHandler, failHandler,timeout) {
-    return HTTPRequestHelper(url, successHandler, failHandler, timeout, true);
+    return HTTPRequestHelper(url, successHandler, failHandler, timeout, false);
 }
 function HTTPRequestHelper(url, successHandler, failHandler) {
-    return HTTPRequestHelper(url, successHandler, failHandler, 2000, true);
+    return HTTPRequestHelper(url, successHandler, failHandler, 2000, false);
 }
 function HTTPRequestHelper(url, successHandler, failHandler, timeout, asynchronous) {
     var xmlhttp = new XMLHttpRequest();
