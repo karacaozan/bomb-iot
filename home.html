@@ -11,69 +11,6 @@
 <body>
 
 
-    <div class="container">
-    <h2 class="container-header">Accessories</h2>
-    <div class="inner-container">
-        <div id="commandListDiv"></div>
-    </div>
-</div>
-
-        <div class="container">
-    <h2 class="container-header">Get Recent Codes</h2>
-    <div class="inner-container">
-        
-                            <a href="javascript:void(0);" style="text-decoration: none;" onclick="RefreshCodes_onClick();">Refresh </a>
-
-                    <br />
-                    <div id="recentCodesList" onclick="cbclick(event)">
-                        Nothing to show...
-                    </div>
-        <br />
-                Test Selected Code:<br />
-        <a href="javascript:void(0);" style="text-decoration: none; color: #7D7C7A" onclick="TestCode_onClick();">Send Command </a>
-                    
-
-    </div>
-</div>
-
-
-            <div class="container">
-    <h2 class="container-header">Add New</h2>
-    <div class="inner-container">
-
-        <select class="networkList" id="accessoryType" onchange="accessoryType_onChange();">
-            <option value="RF433Switch">RF Switch</option>
-            <option value="TemperatureSensor">Temp Sensor</option>
-            <option value="HTTPWebRequest">HTTP Web Request</option>
-        </select>
-
-        <br />
-        <br />
-
-
-        <input id="commandName" placeholder="Accessory Name" /><br />
-
-        <div class="adddiv" id="RF433SwitchDiv">
-
-            <select class="networkList" id="commandType">
-                <option value="light">Light</option>
-                <option value="outlet">Power Outlet</option>
-            </select><br />
-            <br />
-            <input id="commandOnValue" placeholder="On value" onfocus="addCodeValue_onFocus(this);" /><br />
-            <input id="commandOffValue" placeholder="Off value" onfocus="addCodeValue_onFocus(this);" /><br />
-        </div>
-        <div class="adddiv" id="HTTPWebRequestDiv" style="display: none;">
-            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
-             <input id="HTTPWebRequestCallback" placeholder="Callback URL" /><br />
-        </div>
-        <div class="adddiv" id="TemperatureSensorDiv" style="display: none;">
-            <!--<input type="button" value="Add" onclick="AddDHT22_onClick();" /><br />-->
-        </div>
-
-        <input type="button" value="Add" onclick="AddAccessory_onClick();" /><br />
-    </div>
-</div>
 
     <div class="container">
     <h2 class="container-header">Remote Accessories</h2>
@@ -157,6 +94,8 @@ function isCompleted() {
         remoteAccessories.innerHTML = remoteDeviceTable.view.innerHTML;
     }
 }
+
+Scan();
         </script>
 </body>
 </html>
