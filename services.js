@@ -338,7 +338,7 @@ function LoadAccessories() {
     if (top.location.toString().lastIndexOf("ozankaraca.com") > 0) {
         var list = localStorage.getItem("accessories.json");
         if (list) {
-            var arr = JSON.parse(response);
+            var arr = JSON.parse(list);
             _accessories = arr;
             RefreshAccessories();
         }        
