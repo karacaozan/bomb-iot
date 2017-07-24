@@ -30,6 +30,35 @@
     </div>
 
         <script>
+		
+		function HTTPRequestHelper(url, successHandler, failHandler,timeout) {
+    return HTTPRequestHelper(url, successHandler, failHandler, timeout, true);
+}
+function HTTPRequestHelper(url, successHandler, failHandler) {
+    return HTTPRequestHelper(url, successHandler, failHandler, 2000, true);
+}
+function HTTPRequestHelper(url, successHandler, failHandler, timeout, asynchronous) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                doneHandler(xmlhttp.responseText);
+            }
+            else { errorHandler(xmlhttp.responseText); }
+        }
+    }
+    xmlhttp.open("GET", url, asynchronous);
+    if (asynchronous)
+        xmlhttp.timeout = timeout;
+    xmlhttp.send();
+    function doneHandler(response) {
+        successHandler(response);
+    };
+    function errorHandler(response) {
+        failHandler(response);
+    };
+    return xmlhttp;
+}
 
 function Scan() {
 
