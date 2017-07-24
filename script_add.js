@@ -65,8 +65,8 @@ function AddRemote(sender) {
     if (_devices[index].type && _devices[index].type == "RF433Switch") {
 
         accessory = RF433Switch(remoteAccessory.id, remoteAccessory.name, "RF433Switch", false, "Off", remoteAccessory.ip);
-        accessory.SetActionData("Off", remoteAccessory.actions[0].data);
-        accessory.SetActionData("On", remoteAccessory.actions[1].data);
+        accessory.SetActionData("Off", remoteAccessory.actions[1].data);
+        accessory.SetActionData("On", remoteAccessory.actions[0].data);
     }
     else if (_devices[index].type && _devices[index].type == "TemperatureSensor") {
         accessory = TemperatureSensor(remoteAccessory.id, remoteAccessory.name, remoteAccessory.icon, false, "Off", remoteAccessory.ip);
