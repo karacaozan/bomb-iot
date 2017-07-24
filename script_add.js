@@ -74,7 +74,7 @@ function AddRemote(sender) {
 
     else if (_devices[index].type && _devices[index].type == "HTTPWebRequest") {
         accessory = HTTPWebRequest(remoteAccessory.id, remoteAccessory.name, "sensor", false, "Get", remoteAccessory.ip);
-        accessory.SetActionData("Callback", HTTPWebRequestCallback.value);
+        accessory.SetActionData("Callback", HTTPWebRequestCallback.data);
     }
 
 
