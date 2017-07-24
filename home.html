@@ -4,9 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BOMB</title>
     <link rel="stylesheet" type="text/css" href="style_dm.css" />
-    <script type="text/javascript" src="script_dm.js"></script>
-    <script type="text/javascript" src="script_add.js"></script>
-    <script type="text/javascript" src="services.js"></script>
 </head>
 <body>
 
@@ -32,6 +29,8 @@
     </div>
 
     <script>
+
+        var _devices = Array();
 
         function HTTPRequestHelper(url, successHandler, failHandler, timeout) {
             return HTTPRequestHelper(url, successHandler, failHandler, timeout, true);
@@ -82,7 +81,7 @@
 
 
         function getHHTP(url) {
-            var xmlhttp = HTTPRequestHelper(url, successHandler, failHandler, 3000);
+            var xmlhttp = HTTPRequestHelper(url, successHandler, failHandler, 3000,true);
             function successHandler(response) {
                 try {
                     var arr = JSON.parse(response);
@@ -128,7 +127,7 @@
 
         function PageLoad(event) {
             //LoadAccessories();
-            Scan();
+            setTimeout(Scan(), 2000);
         }
 
         if (window.attachEvent) {
@@ -144,6 +143,33 @@
             } else {
                 window.onload = PageLoad;
             }
+        }
+
+        function CreateTable(rows, columns, className) {
+            var obj = {};
+            obj.ChangeCellContent = function (row, column, content) {
+                var table = obj.view.childNodes[0];
+                table.childNodes[row].childNodes[column].innerHTML = content;
+            }
+            obj.ChangeCellObject = function (row, column, object) {
+                var table = obj.view.childNodes[0];
+                table.childNodes[row].childNodes[column].appendChild(object);
+            }
+            var containerDiv = document.createElement("div");
+            var table = document.createElement("table");
+            table.setAttribute("class", className);
+
+            for (i = 0; i < rows; i++) {
+                var trow = document.createElement("tr");
+                for (j = 0; j < columns; j++) {
+                    tcell = document.createElement("td");
+                    trow.appendChild(tcell);
+                }
+                table.appendChild(trow);
+            }
+            containerDiv.appendChild(table);
+            obj.view = containerDiv;
+            return obj;
         }
     </script>
 </body>
