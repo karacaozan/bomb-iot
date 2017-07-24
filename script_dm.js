@@ -196,6 +196,13 @@ function SaveButton_onClick() {
 }
 function saveJsonToFile(filename, json) {
 
+
+    if (top.location.toString().lastIndexOf("ozankaraca.com") > 0) {
+        localStorage.setItem(filename, json);
+        return;
+    }
+
+
     var formData = new FormData();
     var blob = new Blob([json], { type: 'plain/text' });
     formData.append('file', blob, filename);
