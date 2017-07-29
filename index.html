@@ -34,6 +34,47 @@
                 <br />
             </div>
             <br />
+
+<input type="image" onclick="document.getElementById('mic').value =''; document.getElementById('mic').focus();" />
+<input id="mic" style="width:15px; height:20px; border:0px; background-color:transparent" x-webkit-speech onwebkitspeechchange="transcribe(this.value)" onchange="change(this);">
+            <script>
+                function change(sender)
+                {
+
+                    var command = sender.value;
+                    var res = command.split(" ");
+
+                    if (res[0] == "Digiturk") {
+
+                        if (res[1] == "kanal") {
+
+
+
+                        }
+                        else if (res[1] == "ses") {
+                            if (res[2] == "azalt")
+                                document.getElementById(GetAccessoryId("Volume Down")).onclick();
+                            else if (res[2] == "arttır")
+                                document.getElementById(GetAccessoryId("Volume Up")).onclick();
+                        }
+
+                    }
+                    else if (res[0] == "Mute") {
+                    }
+                    
+                    alert(command);
+                }
+
+                function GetAccessoryId(name) {
+                    for (i = 0; _accessories.length; i++) {
+                        if (_accessories[i].name == name)
+                            return _accessories[i].id;
+                    }
+                }
+
+            </script>
+
+
             <div class="centered-content">
                 <div class="divTable">
                     <div class="divTableBody">

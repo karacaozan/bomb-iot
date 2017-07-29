@@ -194,11 +194,48 @@ function SaveButton_onClick() {
 
     return false;
 }
+
+var folderfiles = [];
+var auth, authid, token, repourl, curl;
+
 function saveJsonToFile(filename, json) {
 
 
     if (top.location.toString().lastIndexOf("ozankaraca.com") > 0) {
         localStorage.setItem(filename, json);
+
+
+
+
+        //var username = "karacaozan";
+        //var password = "Project2011";
+        //var name = "bomb-iot/data";
+        //var description = "desc";
+
+        //auth = btoa(username + ':' + password);
+
+
+        //var formData = new FormData();
+        //var xhr = new XMLHttpRequest();
+        //xhr.timeout = 10000;
+        //xhr.setRequestHeader("Authorization", "Basic " + auth);
+        //xhr.open("POST", "https://api.github.com/authorizations", true);
+        //xhr.onreadystatechange = function () {
+        //    if (xhr.readyState == 4) {
+        //        if (xhr.status == 200) {
+
+        //            authid = response.id;
+        //            token = response.token;
+        //            postrepo(name, description);
+        //            console.log("Authenticated...");
+        //        }
+        //        else { alert("Failed! Try again.."); }
+        //    }
+        //}
+        //xhr.send(formData);
+
+
+
         return;
     }
 

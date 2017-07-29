@@ -204,6 +204,58 @@ var Services = {
             function failHandler(response) {
             };
         }
+    },
+    GPIO: {
+        name: "GPIO",
+        data: [],
+        callback: "",
+        readOnly: false,
+        eventOnly: false,
+        set: function (sender) {
+
+
+            var newstate;
+
+            if (!sender.value)
+                newstate = 0;
+            else {
+
+                if (sender.actions.length == 1) {
+                    newstate = 0;
+                }
+                else {
+                    for (j = 0; j < sender.actions.length; j++) {
+                        if (sender.actions[j].state == sender.value) {
+                            newstate = j == sender.actions.length - 1 ? 0 : j + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+            var url = "/api/gpio/set?pin=" + sender.actions[newstate].data + "&state=" + sender.actions[newstate].state;
+            if (!sender.isLocal)
+                url = "http://" + sender.ip + url;
+
+            HTTPRequestHelper(url, successHandler, failHandler);
+            function successHandler(response) {
+                sender.value = sender.actions[newstate].state;
+
+                if (LocalStorage.isAvailable)
+                    LocalStorage.set(sender.id, sender.value);
+
+                var d = document.getElementById(sender.id);
+                if (d) {
+                    d.setAttribute("state", sender.actions[newstate].state);
+                    d.setAttribute("class", "command-buttons_" + sender.actions[newstate].state);
+                    d.childNodes[2].innerHTML = sender.actions[newstate].state;
+                }
+            };
+            function failHandler(response) {
+            };
+
+        }
     }
     
 
@@ -238,6 +290,13 @@ var Accessories = {
         name: "HTTP Web Request",
         service: Services.WebRequest,
         states: []
+    },
+    RelaySwitch: {
+        name: "Relay Switch",
+        numberofClickActions: 2,
+        states: { Off: "Off", On: "On" },
+        value: null,
+        service: Services.GPIO
     },
     Thermostat: {
         name: "Thermostat",
@@ -319,18 +378,18 @@ var TemperatureSensor = function (id, name, icon, isLocal, defaultState, ip) {
 };
 var RelaySwitch = function (id, name, icon, isLocal, defaultState, ip) {
     var acc = Accessory(id, name, icon, isLocal, defaultState, ip);
-    acc.type = "Relay";
+    acc.type = "RelaySwitch";
     acc.defaultstate = defaultState;
-    acc.AddCallback("On", "");
-    acc.AddCallback("Off", "");
+    acc.AddAction("On", "");
+    acc.AddAction("Off", "");
     return acc;
 };
 var RelayTimerSwitch = function (id, name, icon, isLocal, defaultState, ip) {
     var acc = Accessory(id, name, icon, isLocal, defaultState, ip);
     acc.type = "Relay";
     acc.defaultstate = defaultState;
-    acc.AddCallback("On", "");
-    acc.AddCallback("Off", "");
+    acc.AddAction("On", "");
+    acc.AddAction("Off", "");
     return acc;
 };
 

@@ -24,6 +24,11 @@ function accessory_onClick(sender) {
         Accessories[acc.type].service.set(acc);
         return;
     }
+
+    if (acc.type == "RelaySwitch") {
+        Accessories[acc.type].service.set(acc);
+        return;
+    }
 }
 function LoadPage() {
     //LoadCommandList2();

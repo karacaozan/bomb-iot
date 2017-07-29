@@ -26,26 +26,26 @@ if (window.attachEvent) {
 
 
 
-function AddCommand_onClick() {
+//function AddCommand_onClick() {
 
-    var type = document.getElementById("accessoryType").value;
+//    var type = document.getElementById("accessoryType").value;
 
-    if (type == "RF433") {
+//    if (type == "RF433") {
 
-        var accessory = RF433Switch("", commandName.value, commandType.value, true, "Off", "");
-        accessory.SetCallbackData("On", commandOnValue.value);
-        accessory.SetCallbackData("Off", commandOffValue.value);
-    }
-    else if (type == "TemperatureSensor") {
-        var accessory = TemperatureSensor("", commandName.value, "sensor", true, "Get", "");
-    }
-    _accessories.push(accessory);
-    RefreshAccessories();
+//        var accessory = RF433Switch("", commandName.value, commandType.value, true, "Off", "");
+//        accessory.SetCallbackData("On", commandOnValue.value);
+//        accessory.SetCallbackData("Off", commandOffValue.value);
+//    }
+//    else if (type == "TemperatureSensor") {
+//        var accessory = TemperatureSensor("", commandName.value, "sensor", true, "Get", "");
+//    }
+//    _accessories.push(accessory);
+//    RefreshAccessories();
 
-    var myJsonString = JSON.stringify(_accessories);
-    saveJsonToFile("accessories.json", myJsonString);
-    return false;
-}
+//    var myJsonString = JSON.stringify(_accessories);
+//    saveJsonToFile("accessories.json", myJsonString);
+//    return false;
+//}
 function AddRemote(sender) {
 
     var index = sender.getAttribute("arrayIndex");
@@ -64,7 +64,7 @@ function AddRemote(sender) {
 
     if (_devices[index].type && _devices[index].type == "RF433Switch") {
 
-        accessory = RF433Switch(remoteAccessory.id, remoteAccessory.name, "RF433Switch", false, "Off", remoteAccessory.ip);
+        accessory = RF433Switch(remoteAccessory.id, remoteAccessory.name, remoteAccessory.icon, false, "Off", remoteAccessory.ip);
         accessory.SetActionData("Off", remoteAccessory.actions[1].data);
         accessory.SetActionData("On", remoteAccessory.actions[0].data);
     }
@@ -75,6 +75,11 @@ function AddRemote(sender) {
     else if (_devices[index].type && _devices[index].type == "HTTPWebRequest") {
         accessory = HTTPWebRequest(remoteAccessory.id, remoteAccessory.name, "sensor", false, "Get", remoteAccessory.ip);
         accessory.SetActionData("Callback", remoteAccessory.actions[0].data);
+    }
+    else if (_devices[index].type && _devices[index].type == "RelaySwitch") {
+        accessory = RelaySwitch(remoteAccessory.id, remoteAccessory.name, remoteAccessory.icon, false, "Off", remoteAccessory.ip);
+        accessory.SetActionData("Off", remoteAccessory.actions[1].data);
+        accessory.SetActionData("On", remoteAccessory.actions[0].data);
     }
 
 
